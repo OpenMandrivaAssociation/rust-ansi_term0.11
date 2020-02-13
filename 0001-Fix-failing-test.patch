@@ -1,0 +1,38 @@
+From 5ff6af6f38790abcb3aafee1239286c10ef69576 Mon Sep 17 00:00:00 2001
+From: Benjamin Sago <ogham@bsago.me>
+Date: Sat, 13 Jul 2019 14:34:47 +0100
+Subject: [PATCH] Fix failing test
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This test started failing because of a change in the derived Rust impl for Debug — it added commas, so our test string needs commas too. Fixes #51
+---
+ src/debug.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/debug.rs b/src/debug.rs
+index d8cd973..90a8373 100644
+--- a/src/debug.rs
++++ b/src/debug.rs
+@@ -105,7 +105,7 @@ mod test {
+     fn long_and_detailed() {
+         let debug = r##"Style {
+     foreground: Some(
+-        Blue
++        Blue,
+     ),
+     background: None,
+     blink: false,
+@@ -115,7 +115,7 @@ mod test {
+     italic: false,
+     reverse: false,
+     strikethrough: false,
+-    underline: false
++    underline: false,
+ }"##;
+         assert_eq!(debug, format!("{:#?}", Blue.bold()));
+     }
+-- 
+2.22.0
+
